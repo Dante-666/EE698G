@@ -42,7 +42,7 @@ extern int m_histogram(u8 *h_in, u32 *h_out, u32 length) {
      * Call kernel m_hist() to count the individual values.
      */
     grid = dim3(ceil(length/MAX_THREADS));
-    m_hist<<<grid, block>>>(d_in, d_out, length);
+    //m_hist<<<grid, block>>>(d_in, d_out, length);
     cudaMemcpy(h_out, d_out, length * sizeof(u32), cudaMemcpyDeviceToHost);
 
     cudaFree(d_in);
