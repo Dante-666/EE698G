@@ -2,7 +2,10 @@
 #define __PARALLEL_H__
 
 #include <math.h>
+#include <cuda.h>
 #include <cuda_runtime.h>
+#include <stdio.h>
+
 
 #define f32 float
 #define u32 unsigned int
@@ -31,12 +34,13 @@ __global__ void m_hist(u8 *d_in, u32 *d_out, u32 length);
  * This function returns the marginal histogram from a sample stream.
  * Returns 0 on success and -1 upon failure.
  */
-extern int m_histogram(u8 *h_in, u32 *h_out, u32 length);
+extern "C" int m_histogram(u8 *h_in, u32 *h_out, u32 length);
+//int m_histogram(u8 *h_in, u32 *h_out, u32 length);
 
 /**
  * This function returns the joint histogram for two images.
  * Returns 0 in success and -1 upon failure
  */
-extern int j_histogram();
+//extern int j_histogram();
 
 #endif
