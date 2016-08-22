@@ -16,6 +16,43 @@
 #define MAX_THREADX 32
 #define MAX_THREADY 32
 
+typedef struct _Point3D Point3D_t;
+struct _Point3D {
+    f32 x;
+    f32 y;
+    f32 z;
+    u8 refc;
+
+    f32 range;
+};
+
+typedef struct _PointCloud PointCloud_t;
+struct _PointCloud {
+    std::vector<Point3D_t> pointCloud;
+};
+
+typedef struct _PointCloudArray PointCloudArray_t;
+struct _PointCloudArray {
+    std::vector<PointCloud_t> pointCloudArray;
+};
+
+typedef struct _RGB RGB_t;
+struct _RGB {
+    u8 R;
+    u8 G;
+    u8 B;    
+};
+
+typedef struct _RawImage RawImage_t;
+struct _RawImage {
+    std::vector<RGB_t> rawImage;
+};
+
+typedef struct _ImageArray ImageArray_t;
+struct _ImageArray {
+    std::vector<RawImage_t> imageArray;
+};
+
 /**
  * Helper kernel to initialize the device array to 0 count.
  */
@@ -34,8 +71,8 @@ __global__ void m_hist(u8 *d_in, u32 *d_out, u32 length);
  * This function returns the marginal histogram from a sample stream.
  * Returns 0 on success and -1 upon failure.
  */
-extern "C" int m_histogram(u8 *h_in, u32 *h_out, u32 length);
-//int m_histogram(u8 *h_in, u32 *h_out, u32 length);
+int m_histogram(u8 *h_in, u32 *h_out, u32 length);
+int histogram(u8 *h_in, u32 *h_out, u32 length);
 
 /**
  * This function returns the joint histogram for two images.
