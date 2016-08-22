@@ -1,5 +1,3 @@
-#include <iostream>
-#include <vector>
 #include <netpbm/pam.h>
 
 #include "parallel.h"

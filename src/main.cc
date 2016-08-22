@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "parallel.h"
 #include "config.h"
 #include "data.h"
@@ -44,7 +43,7 @@ int init(const char* filename){
         sprintf(scanFile, "%s%s%04d.%s", scanFolder, scanBaseName, useScans[s], scanType);
         printf("%s\n", scanFile);
 
-        //loadLidarData(scanFile);
+        loadLidarData(scanFile);
         for (int i = 0; i < numCams; i++) {
             char camFile[256];
             char str[256];
@@ -53,7 +52,7 @@ int init(const char* filename){
 
             sprintf(camFile, "%s%s%04d.%s", camFolder, imageBaseName, useScans[s], imageType);
             printf("%s\n", camFile);
-            //loadCamData(camFile);
+            loadCamData(camFile);
         }
     }
 

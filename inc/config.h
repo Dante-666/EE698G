@@ -3,6 +3,12 @@
 
 #include <stdio.h>
 #include <time.h>
+#include <string.h>
+#include <stdlib.h>
+#include <linux/limits.h>
+#include <stdarg.h>
+#include <ctype.h>
+#include <assert.h>
 
 #define DEFAULT_CONFIG_PATH "../config/master.cfg"
 

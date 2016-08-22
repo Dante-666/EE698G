@@ -6,6 +6,8 @@
 #include <cuda_runtime.h>
 #include <stdio.h>
 
+#include <iostream>
+#include <vector>
 
 #define f32 float
 #define u32 unsigned int
@@ -28,12 +30,12 @@ struct _Point3D {
 
 typedef struct _PointCloud PointCloud_t;
 struct _PointCloud {
-    std::vector<Point3D_t> pointCloud;
+    std::vector<Point3D_t> points;
 };
 
-typedef struct _PointCloudArray PointCloudArray_t;
+typedef struct _PointClouds PointClouds_t;
 struct _PointCloudArray {
-    std::vector<PointCloud_t> pointCloudArray;
+    std::vector<PointCloud_t> cloud;
 };
 
 typedef struct _RGB RGB_t;

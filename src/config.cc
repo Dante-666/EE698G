@@ -1,10 +1,3 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <linux/limits.h>
-#include <stdarg.h>
-#include <ctype.h>
-#include <assert.h>
 #include "config.h"
 
 #define err(args...) fprintf(stderr, args)
