@@ -20,7 +20,7 @@ int loadLidarData (const char *filename) {
         numPoints++;
     }
 
-    lidarData.cloud.push_back (pCloud);
+    d_lidarData.array.push_back (pCloud);
     std::cout << "Num points loaded = " << pCloud.points.size () << std::endl;
     fflush (f);
     fclose (f);
@@ -35,8 +35,11 @@ int loadCamData(const char* filename) {
     
     tuple **stream;
     stream = pnm_readpam(f, &image, sizeof(struct pam));
-    
 
+        
+
+    fflush (f);
+    fclose (f);
 
     return 0;
 }

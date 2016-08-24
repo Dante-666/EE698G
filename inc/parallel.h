@@ -6,8 +6,8 @@
 #include <cuda_runtime.h>
 #include <stdio.h>
 
-#include <iostream>
-#include <vector>
+#include <thrust/host_vector.h>
+#include <thrust/device_vector.h>
 
 #define f32 float
 #define u32 unsigned int
@@ -30,29 +30,29 @@ struct _Point3D {
 
 typedef struct _PointCloud PointCloud_t;
 struct _PointCloud {
-    std::vector<Point3D_t> points;
+    thrust::device_vector<Point3D_t> points;
 };
 
-typedef struct _PointClouds PointClouds_t;
+typedef struct _PointCloudArray PointCloudArray_t;
 struct _PointCloudArray {
-    std::vector<PointCloud_t> cloud;
+    thrust::device_vector<PointCloud_t> array;
 };
 
 typedef struct _RGB RGB_t;
 struct _RGB {
     u8 R;
     u8 G;
-    u8 B;    
+    u8 B;
 };
 
 typedef struct _RawImage RawImage_t;
 struct _RawImage {
-    std::vector<RGB_t> rawImage;
+    thrust::device_vector<RGB_t> rawImage;
 };
 
 typedef struct _ImageArray ImageArray_t;
 struct _ImageArray {
-    std::vector<RawImage_t> imageArray;
+    thrust::device_vector<RawImage_t> imageArray;
 };
 
 /**

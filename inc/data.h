@@ -6,9 +6,9 @@
  * on to the device. Afterwards, we can do everything in the device 
  * memory.
  */
-PointCloudArray_t lidarData;
-ImageArray_t camData;
-ImageArray_t mask;
+PointCloudArray_t d_lidarData;
+ImageArray_t d_camData;
+ImageArray_t d_mask;
 
 
 /** Self-evident names.

@@ -52,7 +52,7 @@ int init(const char* filename){
 
             sprintf(camFile, "%s%s%04d.%s", camFolder, imageBaseName, useScans[s], imageType);
             printf("%s\n", camFile);
-            loadCamData(camFile);
+//            loadCamData(camFile);
         }
     }
 
