@@ -2,6 +2,16 @@
 #include "config.h"
 #include "data.h"
 
+/**
+ * Define all the host memory here and copy this over to the device later.
+ */
+MetaData_t *h_meta;
+Point3D_t **h_lidarDataArray;
+//RGB_t **h_camDataArray;
+//RGB_t **h_camMaskArray;
+//int *dataID;
+
+
 int init(const char* filename){
 
     if (!filename) return -1;
@@ -36,14 +46,22 @@ int init(const char* filename){
     char *imageBaseName;
     config_get_str(configHandle, "calibration.cameras.image_base_name", &imageBaseName);
     char *imageType;
-     config_get_str(configHandle, "calibration.cameras.image_type", &imageType);
+    config_get_str(configHandle, "calibration.cameras.image_type", &imageType);
+
+    h_meta = (MetaData_t *) malloc(sizeof(MetaData_t));
+    h_meta->numScans = numScans;
+    h_meta->numCams = numCams;
+    h_meta->scanPoints = (u32 *) malloc(sizeof(u32) * numScans);
+
+    h_lidarDataArray = (Point3D_t **) malloc(numScans * sizeof(Point3D_t *));
 
     for (int s = 0; s < numScans; s++) {
         char scanFile[256];
         sprintf(scanFile, "%s%s%04d.%s", scanFolder, scanBaseName, useScans[s], scanType);
         printf("%s\n", scanFile);
 
-        loadLidarData(scanFile);
+        h_meta->scanPoints[s] = loadLidarData(scanFile, h_lidarDataArray, s);
+        std::cout<<"jell"<<std::endl;
         for (int i = 0; i < numCams; i++) {
             char camFile[256];
             char str[256];
@@ -52,7 +70,7 @@ int init(const char* filename){
 
             sprintf(camFile, "%s%s%04d.%s", camFolder, imageBaseName, useScans[s], imageType);
             printf("%s\n", camFile);
-            loadCamData(camFile);
+            //loadCamData(camFile);
         }
     }
 
@@ -75,10 +93,38 @@ int init(const char* filename){
     return 0;
 }
 
+int destroy() {
+    /**
+     * TODO: Recursively free or normally?
+     */
+    std::cout<<"destroy"<<std::endl;
+    for(int i=0; i < h_meta->numScans; i++) {
+        free(h_lidarDataArray[i]);
+    }
+    free(h_lidarDataArray);
+    std::cout<<"after free"<<std::endl;
+    //free(h_camDataArray);
+    //free(h_camMaskArray);
+
+    return 0;
+}
+
+/**
+ * Delete this later.
+ */
+void showData() {
+    Point3D_t *points = h_lidarDataArray[4];
+    for(int i = 0; i < 100; i++){
+        std::cout<<points[i].x<<"--"<<points[i].y<<"--"<<points[i].z<<std::endl;
+    }
+}
+
 int main() {
     if (init(DEFAULT_CONFIG_PATH) < 0) {
         fprintf(stderr, "Initialization failed, check the config file...");
     }
+    showData();
+    destroy();
     /*if (argc < 2 || argc > 2) return -1;
     FreeImage_Initialise(); 
     FREE_IMAGE_FORMAT format = FreeImage_GetFileType(argv[1]);

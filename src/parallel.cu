@@ -93,7 +93,7 @@ int m_histogram(u8 *h_in, u32 *h_out, u32 length) {
     cudaEventSynchronize(stop);
 
     cudaEventElapsedTime(&time, start, stop);
-    std::cout<<"Time taken "<<time<<std::endl;
+    //std::cout<<"Time taken "<<time<<std::endl;
     cudaEventDestroy(start);
     cudaEventDestroy(stop);
 

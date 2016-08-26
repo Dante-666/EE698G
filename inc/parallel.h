@@ -2,12 +2,9 @@
 #define __PARALLEL_H__
 
 #include <math.h>
+#include <stdio.h>
 #include <cuda.h>
 #include <cuda_runtime.h>
-#include <stdio.h>
-
-#include <iostream>
-#include <vector>
 
 #define f32 float
 #define u32 unsigned int
@@ -17,6 +14,15 @@
 #define MAX_THREADS 1024
 #define MAX_THREADX 32
 #define MAX_THREADY 32
+
+typedef struct _MetaData MetaData_t;
+struct _MetaData {
+    u8 numScans;
+    u8 numCams;
+    u32 imgHeight;
+    u32 imgWidth;
+    u32 *scanPoints;
+};
 
 typedef struct _Point3D Point3D_t;
 struct _Point3D {
@@ -28,31 +34,12 @@ struct _Point3D {
     f32 range;
 };
 
-typedef struct _PointCloud PointCloud_t;
-struct _PointCloud {
-    std::vector<Point3D_t> points;
-};
-
-typedef struct _PointClouds PointClouds_t;
-struct _PointCloudArray {
-    std::vector<PointCloud_t> cloud;
-};
 
 typedef struct _RGB RGB_t;
 struct _RGB {
     u8 R;
     u8 G;
     u8 B;    
-};
-
-typedef struct _RawImage RawImage_t;
-struct _RawImage {
-    std::vector<RGB_t> rawImage;
-};
-
-typedef struct _ImageArray ImageArray_t;
-struct _ImageArray {
-    std::vector<RawImage_t> imageArray;
 };
 
 /**

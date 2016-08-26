@@ -1,21 +1,21 @@
+#ifndef __DATA_H__
+#define __DATA_H__
+
 #include <netpbm/pam.h>
 
 #include "parallel.h"
-
-/** These are the data which is absolutely needed by the host to pass
- * on to the device. Afterwards, we can do everything in the device 
- * memory.
+/**
+ * Remove this after debugging.
  */
-PointCloudArray_t lidarData;
-ImageArray_t camData;
-ImageArray_t mask;
-
+#include <iostream>
 
 /** Self-evident names.
  * I've avoided classes and used functions.
  */
-int loadLidarData(const char *filename);
+int loadLidarData(const char *filename, Point3D_t **data, int dataIndex);
 
-int loadCamData(const char *filename);
+int loadCamData(const char *filename, RGB_t **image);
 
-int loadMask(const char *filename);
+int loadMask(const char *filename, RGB_t **mask);
+
+#endif

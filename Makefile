@@ -43,4 +43,4 @@ obj/%.o : src/%.cu
 #	$(CC) $(INC_DIR) $(CXXDEBUGFLAGS) -o $@ $^
 
 clean:
-	rm -f obj/* bin/*
+	rm -f obj/* bin/run
