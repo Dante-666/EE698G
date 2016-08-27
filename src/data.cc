@@ -29,9 +29,9 @@ int loadLidarData (const char *filename, Point3D_t **data, int dataIndex) {
     fflush (f);
     fclose (f);
 
-    return numPoints;
+    return 0;
 }
-/*
+
 int loadCamData(const char* filename) {
     struct pam image;
     FILE *f;
@@ -41,6 +41,10 @@ int loadCamData(const char* filename) {
     stream = pnm_readpam(f, &image, sizeof(struct pam));
     
 
+        
+
+    fflush (f);
+    fclose (f);
 
     return 0;
-}*/
+}
