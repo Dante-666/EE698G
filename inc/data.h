@@ -12,9 +12,9 @@
 /** Self-evident names.
  * I've avoided classes and used functions.
  */
-int loadLidarData(const char *filename, Point3D_t **data, int dataIndex);
+int loadLidarData(const char *filename, Point3D_t **data, int index);
 
-int loadCamData(const char *filename, RGB_t **image);
+int loadCamData(const char *filename, RGB_t **data, int index);
 
 int loadMask(const char *filename, RGB_t **mask);
 

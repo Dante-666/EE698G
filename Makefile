@@ -3,17 +3,17 @@ CC = g++
 NC = nvcc
 
 # C++ Compiler flags
-CXXFLAGS = -c -Wall
+CXXFLAGS = -c -Wall -g
 CXXDEBUGFLAGS = $(CXXFLAGS) -g
 
 # CUDA Compiler flags
-NXXFLAGS = -c
+NXXFLAGS = -c -g
 NXXDEBUGFLAGS = $(NXXFLAGS) -g
 
 # Include and Library directories
 INC_DIR = -Iinc -I/opt/cuda/include
 LIB_DIR = -L/opt/cuda/lib64
-LIB = -lfreeimage -lcuda -lcudart
+LIB = -lfreeimage -lcuda -lcudart -lnetpbm
 
 # Separate files based on file endings
 CC_SRC = $(wildcard src/*.cc)

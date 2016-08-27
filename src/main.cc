@@ -7,8 +7,8 @@
  */
 MetaData_t *h_meta;
 Point3D_t **h_lidarDataArray;
-//RGB_t **h_camDataArray;
-//RGB_t **h_camMaskArray;
+RGB_t **h_camDataArray;
+RGB_t **h_camMaskArray;
 //int *dataID;
 
 
@@ -54,14 +54,15 @@ int init(const char* filename){
     h_meta->scanPoints = (u32 *) malloc(sizeof(u32) * numScans);
 
     h_lidarDataArray = (Point3D_t **) malloc(numScans * sizeof(Point3D_t *));
+    h_camDataArray = (RGB_t **) malloc(numCams * numScans * sizeof(RGB_t *));
 
     for (int s = 0; s < numScans; s++) {
         char scanFile[256];
         sprintf(scanFile, "%s%s%04d.%s", scanFolder, scanBaseName, useScans[s], scanType);
-        printf("%s\n", scanFile);
+        //printf("%s\n", scanFile);
 
         h_meta->scanPoints[s] = loadLidarData(scanFile, h_lidarDataArray, s);
-        std::cout<<"jell"<<std::endl;
+//        std::cout<<"jell"<<std::endl;
         for (int i = 0; i < numCams; i++) {
             char camFile[256];
             char str[256];
@@ -69,8 +70,8 @@ int init(const char* filename){
             config_get_str(configHandle, str, &camFolder);
 
             sprintf(camFile, "%s%s%04d.%s", camFolder, imageBaseName, useScans[s], imageType);
-            printf("%s\n", camFile);
-            //loadCamData(camFile);
+            //printf("%s\n", camFile);
+            loadCamData(camFile, h_camDataArray, s * numCams + i);
         }
     }
 
@@ -79,7 +80,7 @@ int init(const char* filename){
         char str[256];
         sprintf(str, "calibration.cameras.camera_%d.mask", i);
         config_get_str(configHandle, str, &maskFile);
-        printf("%s\n", maskFile);
+        //printf("%s\n", maskFile);
         //loadMask(maskFile);
     }
 
@@ -97,12 +98,15 @@ int destroy() {
     /**
      * TODO: Recursively free or normally?
      */
-    std::cout<<"destroy"<<std::endl;
+//    std::cout<<"destroy"<<std::endl;
     for(int i=0; i < h_meta->numScans; i++) {
         free(h_lidarDataArray[i]);
     }
     free(h_lidarDataArray);
-    std::cout<<"after free"<<std::endl;
+    for(int i=0; i < h_meta->numCams*h_meta->numScans; i++) {
+        
+    }
+//    std::cout<<"after free"<<std::endl;
     //free(h_camDataArray);
     //free(h_camMaskArray);
 
@@ -123,7 +127,7 @@ int main() {
     if (init(DEFAULT_CONFIG_PATH) < 0) {
         fprintf(stderr, "Initialization failed, check the config file...");
     }
-    showData();
+    //showData();
     destroy();
     /*if (argc < 2 || argc > 2) return -1;
     FreeImage_Initialise(); 
