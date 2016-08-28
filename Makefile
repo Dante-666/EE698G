@@ -3,12 +3,10 @@ CC = g++
 NC = nvcc
 
 # C++ Compiler flags
-CXXFLAGS = -c -Wall -g
-CXXDEBUGFLAGS = $(CXXFLAGS) -g
+CXXFLAGS = -c -Wall -O3 -ansi
 
 # CUDA Compiler flags
-NXXFLAGS = -c -g
-NXXDEBUGFLAGS = $(NXXFLAGS) -g
+NXXFLAGS = -c -O3
 
 # Include and Library directories
 INC_DIR = -Iinc -I/opt/cuda/include
@@ -25,6 +23,10 @@ CU_OBJS = $(addprefix obj/, $(notdir $(CU_SRC:%.cu=%.o)))
 
 all: run
 
+debug: CXXFLAGS += -g
+debug: NXXFLAGS += -g
+debug: run	
+
 run: $(CU_OBJS) $(CC_OBJS)
 	$(CC) $(LIB_DIR) $(LIB) $(CU_OBJS) $(CC_OBJS) -o bin/run
 
@@ -32,15 +34,6 @@ obj/%.o : src/%.cc
 	$(CC) $(INC_DIR) $(CXXFLAGS) -o $@ $^
 obj/%.o : src/%.cu
 	$(NC) $(INC_DIR) $(NXXFLAGS) -o $@ $^
-
-#debug: cmakelean $(CU_OBJS) $(CC_OBJS)
-#	$(CC) $(LIB_DIR) $(LIB) $(CU_OBJS) $(CC_OBJS) -o bin/debug
-
-#obj/%.o : src/%.cu
-#	$(NC) $(INC_DIR) $(NXXDEBUGFLAGS) -o $@ $^
-
-#obj/%.o : src/%.cc
-#	$(CC) $(INC_DIR) $(CXXDEBUGFLAGS) -o $@ $^
 
 clean:
 	rm -f obj/* bin/run
